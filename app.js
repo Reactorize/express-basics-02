@@ -1,6 +1,8 @@
 const express = require('express');
 const app = express();
 
+app.use(express.static('public'));
+
 const people = [
     {
         id: 1,
@@ -34,8 +36,8 @@ app.get('/', (req, res) => {
 
 app.get('/api/people', (req, res) => {
     const simplifiedPeople = people.map(person => {
-        const { name } = person;
-        return { name }
+        const { name, age, id } = person;
+        return { name, age, id }
     })
     res.json(simplifiedPeople);
 })

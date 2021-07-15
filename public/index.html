@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API - People</title>
+    <style>
+        #show-people {
+            list-style: none;
+            padding: 0px;
+        }
+        #show-people li {
+            padding: 4px 15px;
+            background-color: #d8d8d8;
+            margin: 5px 0px;
+        }
+    </style>
+</head>
+<body>
+    <ul id="show-people"></ul>
+    <p>
+        <a href="./api/query?search=m">First letter 'm'</a><br>
+        <a href="./api/query?search=m&limit=1">First letter 'm', limit 1
+        person</a>
+    </p>
+    <script>
+        fetch('./api/people')
+            .then(function (response) {
+                    return response.json();
+            })
+            .then(function (data) {
+                    appendData(data);
+            })
+            .catch(function (err) {
+                    console.log('error: ' + err);
+            });
+            function appendData(data) {
+                const showPeople = document.getElementById('show-people');
+                for (var i = 0; i < data.length; i++) {
+                    var li = document.createElement("li");
+                    li.innerHTML = `<a href="./api/people/${data[i].id}">Name: ${data[i].name} - Age: ${data[i].age}</a>`;
+                    showPeople.appendChild(li);
+            }
+        }
+    </script>
+</body>
+</html>
