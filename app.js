@@ -29,7 +29,7 @@ const people = [
 ]
 
 app.get('/', (req, res) => {
-    res.send("This is the home page.")
+    res.send(`<h1>Home Page</h1><p><a href="./api/people">View All People</a><br><a href="./api/query?search=m">First letter 'm'</a><br><a href="./api/query?search=m&limit=1">First letter 'm', limit 1 person</a></p>`)
 })
 
 app.get('/api/people', (req, res) => {
