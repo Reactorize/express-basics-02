@@ -65,5 +65,9 @@ app.get('/api/query', (req, res) => {
     res.status(200).json(sortedPeople);
 })
 
+app.all('*', (req, res) => {
+  res.status(404).send('<h1>Page Not Found</h1>')
+})
+
 const port = 4500;
 app.listen(port, () => console.log(`Listening to the server on port ${port}...`));
