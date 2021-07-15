@@ -42,16 +42,7 @@ app.get('/api/people', (req, res) => {
     res.json(simplifiedPeople);
 })
 
-app.get('/api/people/:personID', (req, res) => {
-    const { personID } = req.params;
-    const singlePerson = people.find(person => person.id === Number(personID));
-    if (!singlePerson) {
-        return res.status(404).send('No person with that id seems to be in our database.')
-    }
-    return res.json(singlePerson);
-})
-
-app.get('/api/query', (req, res) => {
+app.get('/api/people/query', (req, res) => {
     const { search, limit } = req.query;
     let sortedPeople = [...people];
     if (search) {
@@ -62,8 +53,22 @@ app.get('/api/query', (req, res) => {
     if (limit) {
         sortedPeople = sortedPeople.slice(0, Number(limit));
     }
+    if (sortedPeople.length === 0) {
+        return res.status(200).json({success: true, data: []})
+    }
     res.status(200).json(sortedPeople);
 })
+
+app.get('/api/people/:personID', (req, res) => {
+    const { personID } = req.params;
+    const singlePerson = people.find(person => person.id === Number(personID));
+    if (!singlePerson) {
+        return res.status(404).send('No person with that id seems to be in our database.')
+    }
+    return res.json(singlePerson);
+})
+
+
 
 app.all('*', (req, res) => {
   res.status(404).send('<h1>Page Not Found</h1>')
